@@ -104,7 +104,8 @@ class Pnts:
         hdr[0]['batchTableByteLength'][0] = batch_header_bytes.nbytes
         hdr[0]['batchTableByteLength'][1] = np.sum(e.nbytes for e in _batch_data)
 
-        txt = [e.tobytes() for e in _data]
+        #txt = [e.tobytes() for e in _data]
+        txt = [e.tostring() for e in _data]
         txt = b''.join(txt)
         with open(filename,'wb') as fh:
             fh.write(txt)
