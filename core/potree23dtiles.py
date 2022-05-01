@@ -210,6 +210,7 @@ class TreeNode:
         else:
             for e in self.childs:
                 e.add_node(node)
+                #print('add_node',node.key)
 
     def set_file(self,file,hierarchy_step_size=5):
         self.file = file
@@ -407,11 +408,19 @@ def convert_to_3dtiles_v2(src,outdir,proj_param,max_level = 15):
 def convert_to_3dtiles(src,outdir,proj_param,max_level = 15):
 
     cloudjs = '%s/cloud.js' % (src)
+    sourcesjson = '%s/sources.json' % (src)
     meta_json = '%s/metadata.json' % (src)
 
     # check version by file
-    if os.path.exists(cloudjs) and os.path.exists('%s/sources.json' % (src)) :
+    #if os.path.exists(cloudjs) and os.path.exists('%s/sources.json' % (src)) :
+    #    convert_to_3dtiles_v1(src,outdir,proj_param,max_level)
+    if os.path.exists(cloudjs) :
+      print('cloudjs file found')
+      if os.path.exists(sourcesjson) :
+        print('sourcesjson file found')
         convert_to_3dtiles_v1(src,outdir,proj_param,max_level)
+      else:
+        print('sourcesjson file NOT found')
     elif os.path.exists(meta_json) and os.path.exists('%s/octree.bin' % (src)) and os.path.exists('%s/hierarchy.bin' % (src)):
         convert_to_3dtiles_v2(src,outdir,proj_param,max_level)
     else:
